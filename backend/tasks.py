@@ -40,6 +40,7 @@ def create_tasks(theme):
         """,
         expected_output="""
             A cohesive narrative that integrates the created world, characters, and conflicts. The Game Master should provide feedback and guidance to ensure all elements work together to create an engaging story.
+            Game Master should also add emojis to the content to make it more engaging and visually appealing.
         """,
         agent=game_master
     )
