@@ -1,15 +1,21 @@
 from crewai import Task
 from agents import world_architect, character_designer, conflict_creator, game_master
 
-def create_tasks(theme):
+def create_tasks(theme, notes=None):
+
+    user_context = f"""
+    User selected theme: {theme}
+    Additional user preferences:
+    {notes if notes else "No additional preferences provided."}
+    """
 
     world_task = Task(
         description=f"""
-            Theme: {theme}
-            Create a rich and immersive game world based on the given theme. Consider the setting, culture, and environment to make it engaging and believable.
+            {user_context}
+            Create a rich and immersive game world based on the {theme} and incorporate the user's preferences if relevant. Consider the setting, culture, and environment to make it engaging and believable.
         """,
         expected_output="""
-            A detailed description of the game world, including its setting, culture, and environment. This should provide a vivid backdrop for the story and inspire the other agents in their tasks.
+            A detailed description of the game world, including its setting, culture, environment and, perhaps, the user's preferences. This should provide a vivid backdrop for the story and inspire the other agents in their tasks.
         """,
         agent=world_architect
     )
@@ -36,7 +42,15 @@ def create_tasks(theme):
 
     game_master_task = Task(
         description="""
-            Oversee the story development process, ensuring coherence and integration of all elements. Provide feedback and guidance to the other agents to maintain a cohesive narrative.
+            {user_context}
+
+            Oversee the story development process, ensuring coherence and integration of all elements.
+            
+            The final output must:
+            - Respect the chosen theme
+            - Incorporate user preferences
+            - Be immersive
+            - Use emojis to enhance presentation
         """,
         expected_output="""
             A cohesive narrative that integrates the created world, characters, and conflicts. The Game Master should provide feedback and guidance to ensure all elements work together to create an engaging story.

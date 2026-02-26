@@ -15,8 +15,9 @@ app.add_middleware(
 
 class GameRequest(BaseModel):
     theme: str
+    notes: str | None = None
 
 @app.post("/run_game")
 def run_game_endpoint(request: GameRequest):
-    result = run_game(request.theme)
+    result = run_game(request.theme, request.notes)
     return {"result": result.raw}

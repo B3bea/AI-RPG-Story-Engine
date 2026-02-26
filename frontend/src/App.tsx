@@ -9,12 +9,13 @@ function App() {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleStart = async (selectedTheme: string) => {
+  const handleStart = async (theme: string, notes?: string) => {
     setLoading(true);
     setResult("");
     
     try {
-      const response = await runGame(selectedTheme);  
+      const response = await runGame(theme, notes);  
+      console.log("BACKEND RESPONSE:", response);
       setResult(response.result);
     }catch (error) {
       console.error(error);
@@ -27,7 +28,7 @@ function App() {
     <div className="root"> 
       <div className="app-container">
         {!loading && !result && (
-          <ThemeSelector onSelectedTheme={handleStart} />
+          <ThemeSelector onStartGame={handleStart} />
         )}
 
         {loading && <LoadingScreen  />}
